@@ -12,7 +12,7 @@ dispXSpending = data.groupby(
 
 info = dispXSpending.sum()
 
-#pie.plot(info)
+pie.plot(info)
 
 ########################################
 single = [[0 for _ in range(7)] for _ in range(24)]
@@ -59,7 +59,7 @@ fsoSum = feedbackXSO.sum()
 names = fsoSum.index
 ind = np.arange(len(names))
 
-plt.bar(ind, fsoSum/fsoCount, 1)
+plt.bar(ind, fsoSum/fsoCount, 1, color='rgb')
 
 plt.xticks(ind, fsoSum.index)
 plt.title("Porcentagem de feedback por plataforma")
@@ -81,6 +81,97 @@ ind = np.arange(len(names))
 
 plt.xticks(ind, names)
 plt.title("Bairros com maior crescimento de usuarios")
-plt.bar(ind, locSum/newbies, 1)
+plt.bar(ind, locSum/newbies, 1, color='rgb')
+plt.figure()
+
+
+##############################################################
+loc = data.groupby([data['BAIRRO_USUARIO']])['VALOR_PRODUTOS']
+locSum = loc.sum().nlargest(5)
+
+names = []
+for i in locSum.index:
+    names.append(unicode(i, 'utf-8'))
+ind = np.arange(len(names))
+
+plt.xticks(ind, names)
+plt.title("Bairros com maior retorno financeiro")
+plt.bar(ind, locSum, 1, color='rgb')
+plt.figure()
+
+
+##############################################################
+loc = data.groupby([data['BAIRRO_USUARIO']])['VALOR_PRODUTOS']
+locSum = loc.sum()
+locCount = loc.count()
+
+big = (locSum/locCount).nlargest(5)
+
+names = []
+for i in big.index:
+    names.append(unicode(i, 'utf-8'))
+ind = np.arange(len(names))
+
+plt.xticks(ind, names)
+plt.title("Bairros com maior gasto medio")
+plt.bar(ind, big, 1, color='rgb')
+plt.figure()
+
+
+##############################################################
+av = data.groupby(['ID_ESTABELECIMENTO'])['AVALIACAO']
+mean = av.mean()
+
+smallest = mean.nsmallest(5)
+
+names = smallest.index
+ind = np.arange(len(names))
+
+plt.xticks(ind, names)
+plt.title("Estabelecimentos com piores avaliacoes")
+plt.bar(ind, smallest, 1, color='rgb')
+plt.figure()
+
+##############################################################
+biggest = mean.nlargest(10)
+
+names = biggest.index
+ind = np.arange(len(names))
+
+plt.xticks(ind, names)
+plt.title("Estabelecimentos com melhores avaliacoes")
+plt.bar(ind, biggest, 1, color='rgb')
+plt.figure()
+
+
+###############################################################
+av = data.groupby(['BAIRRO_USUARIO'])['AVALIACAO']
+mean = av.mean()
+
+smallest = mean.nsmallest(5)
+
+names = []
+for i in smallest.index:
+    names.append(unicode(i, 'utf-8'))
+ind = np.arange(len(names))
+
+plt.xticks(ind, names)
+plt.title("Bairros com maior insatisfacao")
+plt.bar(ind, smallest, 1, color='rgb')
+plt.figure()
+
+##############################################################
+biggest = mean.nlargest(5)
+
+names = []
+for i in biggest.index:
+    names.append(unicode(i, 'utf-8'))
+ind = np.arange(len(names))
+plt.xticks(ind, names)
+plt.title("Bairros com mais satisfacao")
+plt.bar(ind, biggest, 1, color='rgb')
+plt.figure()
+
 plt.show()
+
 
