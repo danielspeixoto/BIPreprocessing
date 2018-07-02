@@ -10,4 +10,4 @@ def plot(info):
 
     plt.axis('equal')
     plt.tight_layout()
-    plt.show()
+    plt.figure()
