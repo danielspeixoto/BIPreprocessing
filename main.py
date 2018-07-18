@@ -186,4 +186,4 @@ for img in imgs:
     html += mpld3.fig_to_html(img)
 
 from mpld3._server import serve
-serve(html, port=9000)
+serve(html, port=9000, ip='0.0.0.0')
